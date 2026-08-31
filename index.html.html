@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management System</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -32,7 +31,7 @@
                     <span class="role-icon">👨‍🎓</span>
                     <span class="role-title">Student</span>
                     <span class="role-description">
-                        Login or register as a student
+                        Login or sign up as a student
                     </span>
                 </button>
 
@@ -80,6 +79,7 @@
                 <form id="studentLoginForm">
 
                     <div class="form-group">
+
                         <label for="studentLoginUsername">
                             Student ID / Username
                         </label>
@@ -90,9 +90,11 @@
                             placeholder="Enter Student ID or Username"
                             required
                         >
+
                     </div>
 
                     <div class="form-group">
+
                         <label for="studentLoginPassword">
                             Password
                         </label>
@@ -103,6 +105,7 @@
                             placeholder="Enter password"
                             required
                         >
+
                     </div>
 
                     <button type="submit" class="primary-button">
@@ -112,15 +115,13 @@
                 </form>
 
                 <div class="register-question">
-                    <p>Are you already registered?</p>
 
-                    <button id="showLoginButton" class="secondary-button">
-                        Yes, Login
-                    </button>
+                    <p>New student?</p>
 
                     <button id="registerNowButton" class="outline-button">
-                        No, Register Now
+                        Sign Up
                     </button>
+
                 </div>
 
             </div>
@@ -145,19 +146,23 @@
             <div class="form-card">
 
                 <div class="form-header">
-                    <div class="form-icon">📝</div>
+
+                    <div class="form-icon">
+                        📝
+                    </div>
 
                     <div>
                         <h2>Student Registration</h2>
                         <p>Enter your student information</p>
                     </div>
+
                 </div>
 
                 <div id="registrationMessage"></div>
 
                 <form id="studentRegistrationForm">
 
-                    <!-- STUDENT LOGIN INFORMATION -->
+                    <!-- ACCOUNT INFORMATION -->
 
                     <h3 class="section-title">
                         Account Information
@@ -166,6 +171,7 @@
                     <div class="form-grid">
 
                         <div class="form-group">
+
                             <label for="studentId">
                                 Student ID *
                             </label>
@@ -176,9 +182,11 @@
                                 placeholder="Enter Student ID"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="username">
                                 Username *
                             </label>
@@ -189,9 +197,11 @@
                                 placeholder="Enter Username"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="password">
                                 Password *
                             </label>
@@ -200,11 +210,14 @@
                                 type="password"
                                 id="password"
                                 placeholder="Create Password"
+                                minlength="6"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="confirmPassword">
                                 Confirm Password *
                             </label>
@@ -213,8 +226,10 @@
                                 type="password"
                                 id="confirmPassword"
                                 placeholder="Confirm Password"
+                                minlength="6"
                                 required
                             >
+
                         </div>
 
                     </div>
@@ -229,6 +244,7 @@
                     <div class="form-grid">
 
                         <div class="form-group">
+
                             <label for="fullName">
                                 Full Name *
                             </label>
@@ -239,9 +255,11 @@
                                 placeholder="Enter Full Name"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="dateOfBirth">
                                 Date of Birth *
                             </label>
@@ -251,22 +269,31 @@
                                 id="dateOfBirth"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="gender">
                                 Gender *
                             </label>
 
                             <select id="gender" required>
-                                <option value="">Select Gender</option>
+
+                                <option value="">
+                                    Select Gender
+                                </option>
+
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
+
                             </select>
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="email">
                                 Email *
                             </label>
@@ -277,9 +304,11 @@
                                 placeholder="example@email.com"
                                 required
                             >
+
                         </div>
 
                         <div class="form-group">
+
                             <label for="phone">
                                 Phone *
                             </label>
@@ -287,15 +316,25 @@
                             <input
                                 type="tel"
                                 id="phone"
-                                placeholder="Enter Phone Number"
+                                placeholder="Enter 10-digit Phone Number"
+                                pattern="[0-9]{10}"
+                                minlength="10"
+                                maxlength="10"
+                                inputmode="numeric"
                                 required
                             >
+
+                            <small class="input-help">
+                                Enter exactly 10 digits.
+                            </small>
+
                         </div>
 
                     </div>
 
 
                     <div class="form-group full-width">
+
                         <label for="address">
                             Address *
                         </label>
@@ -306,6 +345,7 @@
                             placeholder="Enter Address"
                             required
                         ></textarea>
+
                     </div>
 
 
@@ -318,6 +358,7 @@
                     <div class="form-grid">
 
                         <div class="form-group">
+
                             <label for="department">
                                 Department *
                             </label>
@@ -357,8 +398,8 @@
                                 </option>
 
                             </select>
-                        </div>
 
+                        </div>
 
                         <div class="form-group">
 
@@ -375,7 +416,6 @@
                             </select>
 
                         </div>
-
 
                         <div class="form-group">
 
@@ -404,7 +444,6 @@
 
                         </div>
 
-
                         <div class="form-group">
 
                             <label for="admissionNumber">
@@ -419,7 +458,6 @@
                             >
 
                         </div>
-
 
                         <div class="form-group">
 
@@ -462,7 +500,6 @@
                             >
 
                         </div>
-
 
                         <div class="form-group">
 
@@ -551,7 +588,6 @@
 
                     </div>
 
-
                     <div class="form-group">
 
                         <label for="adminPassword">
@@ -566,7 +602,6 @@
                         >
 
                     </div>
-
 
                     <button
                         type="submit"
@@ -640,7 +675,6 @@
 
             </aside>
 
-
             <main class="dashboard-main">
 
                 <header class="dashboard-header">
@@ -652,11 +686,8 @@
 
                 </header>
 
-
                 <div id="studentDashboardContent">
-
                     <!-- JavaScript inserts student details here -->
-
                 </div>
 
             </main>
@@ -708,19 +739,13 @@
 
             </aside>
 
-
             <main class="dashboard-main">
 
                 <header class="dashboard-header">
 
                     <div>
-
                         <h1>Admin Dashboard</h1>
-
-                        <p>
-                            Manage registered students
-                        </p>
-
+                        <p>Manage registered students</p>
                     </div>
 
                     <button
@@ -745,13 +770,10 @@
 
                         <div>
                             <span>Total Students</span>
-                            <strong id="totalStudents">
-                                0
-                            </strong>
+                            <strong id="totalStudents">0</strong>
                         </div>
 
                     </div>
-
 
                     <div class="stat-card">
 
@@ -761,13 +783,10 @@
 
                         <div>
                             <span>Departments</span>
-                            <strong id="totalDepartments">
-                                0
-                            </strong>
+                            <strong id="totalDepartments">0</strong>
                         </div>
 
                     </div>
-
 
                     <div class="stat-card">
 
@@ -777,9 +796,7 @@
 
                         <div>
                             <span>Courses</span>
-                            <strong id="totalCourses">
-                                0
-                            </strong>
+                            <strong id="totalCourses">0</strong>
                         </div>
 
                     </div>
@@ -804,7 +821,6 @@
                         >
 
                     </div>
-
 
                     <div class="form-group">
 
@@ -850,7 +866,6 @@
 
                     </div>
 
-
                     <div class="form-group">
 
                         <label for="courseFilter">
@@ -877,17 +892,11 @@
                     <div class="table-header">
 
                         <div>
-
                             <h2>Registered Students</h2>
-
-                            <p>
-                                View, edit or delete student records
-                            </p>
-
+                            <p>View, edit or delete student records</p>
                         </div>
 
                     </div>
-
 
                     <div class="table-responsive">
 
@@ -896,7 +905,6 @@
                             <thead>
 
                                 <tr>
-
                                     <th>Student ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -906,14 +914,11 @@
                                     <th>Semester</th>
                                     <th>Admission Year</th>
                                     <th>Actions</th>
-
                                 </tr>
 
                             </thead>
 
-                            <tbody id="studentTableBody">
-
-                            </tbody>
+                            <tbody id="studentTableBody"></tbody>
 
                         </table>
 
@@ -980,7 +985,9 @@
 
                     <div class="form-group">
 
-                        <label>Student ID</label>
+                        <label for="editStudentId">
+                            Student ID
+                        </label>
 
                         <input
                             type="text"
@@ -990,10 +997,11 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Username</label>
+                        <label for="editUsername">
+                            Username
+                        </label>
 
                         <input
                             type="text"
@@ -1003,10 +1011,11 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Full Name</label>
+                        <label for="editFullName">
+                            Full Name
+                        </label>
 
                         <input
                             type="text"
@@ -1016,10 +1025,11 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Date of Birth</label>
+                        <label for="editDateOfBirth">
+                            Date of Birth
+                        </label>
 
                         <input
                             type="date"
@@ -1029,14 +1039,18 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Gender</label>
+                        <label for="editGender">
+                            Gender
+                        </label>
 
                         <select id="editGender" required>
 
-                            <option value="">Select Gender</option>
+                            <option value="">
+                                Select Gender
+                            </option>
+
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
@@ -1045,10 +1059,11 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Email</label>
+                        <label for="editEmail">
+                            Email
+                        </label>
 
                         <input
                             type="email"
@@ -1058,27 +1073,36 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Phone</label>
+                        <label for="editPhone">
+                            Phone
+                        </label>
 
                         <input
                             type="tel"
                             id="editPhone"
+                            placeholder="Enter 10-digit Phone Number"
+                            pattern="[0-9]{10}"
+                            minlength="10"
+                            maxlength="10"
+                            inputmode="numeric"
                             required
                         >
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Department</label>
+                        <label for="editDepartment">
+                            Department
+                        </label>
 
                         <select id="editDepartment" required>
 
-                            <option value="">Select Department</option>
+                            <option value="">
+                                Select Department
+                            </option>
 
                             <option value="Management">
                                 Management
@@ -1112,23 +1136,27 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Course</label>
+                        <label for="editCourse">
+                            Course
+                        </label>
 
                         <select id="editCourse" required>
+
                             <option value="">
                                 Select Course
                             </option>
+
                         </select>
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Semester</label>
+                        <label for="editSemester">
+                            Semester
+                        </label>
 
                         <select id="editSemester" required>
 
@@ -1151,10 +1179,11 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Admission Number</label>
+                        <label for="editAdmissionNumber">
+                            Admission Number
+                        </label>
 
                         <input
                             type="text"
@@ -1164,14 +1193,17 @@
 
                     </div>
 
-
                     <div class="form-group">
 
-                        <label>Admission Year</label>
+                        <label for="editAdmissionYear">
+                            Admission Year
+                        </label>
 
                         <input
                             type="number"
                             id="editAdmissionYear"
+                            min="1900"
+                            max="2100"
                             required
                         >
 
@@ -1179,10 +1211,11 @@
 
                 </div>
 
-
                 <div class="form-group">
 
-                    <label>Address</label>
+                    <label for="editAddress">
+                        Address
+                    </label>
 
                     <textarea
                         id="editAddress"
@@ -1191,7 +1224,6 @@
                     ></textarea>
 
                 </div>
-
 
                 <div class="form-actions">
 
@@ -1219,7 +1251,6 @@
     </div>
 
 
-    <!-- JavaScript is completely external -->
     <script src="script.js"></script>
 
 </body>

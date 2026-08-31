@@ -13,7 +13,7 @@ let students = [];
 
 
 /* =========================================================
-   CURRENT LOGIN
+   CURRENT LOGIN / EDITING STATE
 ========================================================= */
 
 let currentStudentId = null;
@@ -22,13 +22,6 @@ let editingStudentId = null;
 
 /* =========================================================
    ADMIN LOGIN
-=========================================================
-
-   IMPORTANT:
-   These credentials are intentionally kept in JavaScript
-   for this frontend-only educational project.
-
-   Change them here if required.
 ========================================================= */
 
 const ADMIN_USERNAME = "admin";
@@ -108,21 +101,32 @@ const pages = {
 
 
 /* =========================================================
-   SHOW PAGE FUNCTION
+   SHOW PAGE
 ========================================================= */
 
 function showPage(page) {
 
     Object.values(pages).forEach(function (currentPage) {
-        currentPage.classList.remove("active-page");
+
+        if (currentPage) {
+            currentPage.classList.remove("active-page");
+        }
+
     });
 
-    page.classList.add("active-page");
+
+    if (page) {
+
+        page.classList.add("active-page");
+
+    }
+
 
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
@@ -130,9 +134,13 @@ function showPage(page) {
    ROLE SELECTION
 ========================================================= */
 
-document
-    .getElementById("studentRoleBtn")
-    .addEventListener("click", function () {
+const studentRoleBtn =
+    document.getElementById("studentRoleBtn");
+
+
+if (studentRoleBtn) {
+
+    studentRoleBtn.addEventListener("click", function () {
 
         clearMessage("studentLoginMessage");
 
@@ -140,10 +148,16 @@ document
 
     });
 
+}
 
-document
-    .getElementById("adminRoleBtn")
-    .addEventListener("click", function () {
+
+const adminRoleBtn =
+    document.getElementById("adminRoleBtn");
+
+
+if (adminRoleBtn) {
+
+    adminRoleBtn.addEventListener("click", function () {
 
         clearMessage("adminLoginMessage");
 
@@ -151,107 +165,220 @@ document
 
     });
 
+}
+
 
 /* =========================================================
    STUDENT LOGIN BACK
 ========================================================= */
 
-document
-    .getElementById("studentLoginBack")
-    .addEventListener("click", function () {
+const studentLoginBack =
+    document.getElementById("studentLoginBack");
+
+
+if (studentLoginBack) {
+
+    studentLoginBack.addEventListener("click", function () {
+
+        clearMessage("studentLoginMessage");
 
         showPage(pages.role);
 
     });
+
+}
 
 
 /* =========================================================
    ADMIN LOGIN BACK
 ========================================================= */
 
-document
-    .getElementById("adminLoginBack")
-    .addEventListener("click", function () {
+const adminLoginBack =
+    document.getElementById("adminLoginBack");
+
+
+if (adminLoginBack) {
+
+    adminLoginBack.addEventListener("click", function () {
+
+        clearMessage("adminLoginMessage");
 
         showPage(pages.role);
 
     });
 
+}
+
 
 /* =========================================================
-   REGISTRATION NAVIGATION
+   STUDENT SIGN UP
+=========================================================
+
+   The student login page should contain a button
+   with the ID:
+
+       registerNowButton
+
+   Clicking it opens the registration page.
 ========================================================= */
 
-document
-    .getElementById("registerNowButton")
-    .addEventListener("click", function () {
+const registerNowButton =
+    document.getElementById("registerNowButton");
+
+
+if (registerNowButton) {
+
+    registerNowButton.addEventListener("click", function () {
+
+        adminAddingStudent = false;
 
         clearMessage("registrationMessage");
 
-        document
-            .getElementById("studentRegistrationForm")
-            .reset();
+        const registrationForm =
+            document.getElementById(
+                "studentRegistrationForm"
+            );
 
-        populateCourseDropdown(
-            document.getElementById("course"),
-            ""
-        );
+
+        if (registrationForm) {
+
+            registrationForm.reset();
+
+        }
+
+
+        const courseSelect =
+            document.getElementById("course");
+
+
+        if (courseSelect) {
+
+            populateCourseDropdown(
+                courseSelect,
+                ""
+            );
+
+        }
+
 
         showPage(pages.registration);
 
     });
 
+}
 
-document
-    .getElementById("showLoginButton")
-    .addEventListener("click", function () {
+
+/* =========================================================
+   SHOW LOGIN FROM REGISTRATION
+========================================================= */
+
+const showLoginButton =
+    document.getElementById("showLoginButton");
+
+
+if (showLoginButton) {
+
+    showLoginButton.addEventListener("click", function () {
+
+        clearMessage("studentLoginMessage");
 
         showPage(pages.studentLogin);
 
     });
 
+}
 
-document
-    .getElementById("registrationBack")
-    .addEventListener("click", function () {
 
-        showPage(pages.studentLogin);
+/* =========================================================
+   REGISTRATION BACK
+========================================================= */
+
+const registrationBack =
+    document.getElementById("registrationBack");
+
+
+if (registrationBack) {
+
+    registrationBack.addEventListener("click", function () {
+
+        clearMessage("registrationMessage");
+
+        showPage(
+            adminAddingStudent
+                ? pages.adminDashboard
+                : pages.studentLogin
+        );
 
     });
+
+}
 
 
 /* =========================================================
    DEPARTMENT → COURSE
 ========================================================= */
 
-document
-    .getElementById("department")
-    .addEventListener("change", function () {
-
-        const department = this.value;
-
-        populateCourseDropdown(
-            document.getElementById("course"),
-            department
-        );
-
-    });
+const departmentSelect =
+    document.getElementById("department");
 
 
-function populateCourseDropdown(selectElement, department) {
+if (departmentSelect) {
+
+    departmentSelect.addEventListener(
+        "change",
+        function () {
+
+            const department = this.value;
+
+            const courseSelect =
+                document.getElementById("course");
+
+
+            if (courseSelect) {
+
+                populateCourseDropdown(
+                    courseSelect,
+                    department
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   POPULATE COURSE DROPDOWN
+========================================================= */
+
+function populateCourseDropdown(
+    selectElement,
+    department
+) {
+
+    if (!selectElement) {
+        return;
+    }
+
 
     selectElement.innerHTML = "";
 
+
     if (!department) {
 
-        const option = document.createElement("option");
+        const option =
+            document.createElement("option");
 
         option.value = "";
-        option.textContent = "Select Department First";
+        option.textContent =
+            "Select Department First";
 
         selectElement.appendChild(option);
 
         return;
+
     }
 
 
@@ -259,12 +386,14 @@ function populateCourseDropdown(selectElement, department) {
         document.createElement("option");
 
     defaultOption.value = "";
-    defaultOption.textContent = "Select Course";
+    defaultOption.textContent =
+        "Select Course";
 
     selectElement.appendChild(defaultOption);
 
 
-    const courses = courseData[department] || [];
+    const courses =
+        courseData[department] || [];
 
 
     courses.forEach(function (course) {
@@ -283,321 +412,480 @@ function populateCourseDropdown(selectElement, department) {
 
 
 /* =========================================================
-   REGISTRATION
+   ADMIN ADDING STUDENT FLAG
 ========================================================= */
 
-document
-    .getElementById("studentRegistrationForm")
-    .addEventListener("submit", async function (event) {
-
-        event.preventDefault();
+let adminAddingStudent = false;
 
 
-        clearMessage("registrationMessage");
+/* =========================================================
+   STUDENT REGISTRATION
+========================================================= */
+
+const studentRegistrationForm =
+    document.getElementById(
+        "studentRegistrationForm"
+    );
 
 
-        const studentId =
-            document.getElementById("studentId")
-                .value.trim();
+if (studentRegistrationForm) {
 
-        const username =
-            document.getElementById("username")
-                .value.trim();
+    studentRegistrationForm.addEventListener(
+        "submit",
+        async function (event) {
 
-        const password =
-            document.getElementById("password")
-                .value;
-
-        const confirmPassword =
-            document.getElementById("confirmPassword")
-                .value;
-
-        const fullName =
-            document.getElementById("fullName")
-                .value.trim();
-
-        const dateOfBirth =
-            document.getElementById("dateOfBirth")
-                .value;
-
-        const gender =
-            document.getElementById("gender")
-                .value;
-
-        const email =
-            document.getElementById("email")
-                .value.trim();
-
-        const phone =
-            document.getElementById("phone")
-                .value.trim();
-
-        const address =
-            document.getElementById("address")
-                .value.trim();
-
-        const department =
-            document.getElementById("department")
-                .value;
-
-        const course =
-            document.getElementById("course")
-                .value;
-
-        const semester =
-            document.getElementById("semester")
-                .value;
-
-        const admissionNumber =
-            document.getElementById("admissionNumber")
-                .value.trim();
-
-        const admissionYear =
-            document.getElementById("admissionYear")
-                .value;
+            event.preventDefault();
 
 
-        /* -------------------------------------------------
-           VALIDATION
-        ------------------------------------------------- */
+            clearMessage("registrationMessage");
 
-        if (
-            !studentId ||
-            !username ||
-            !password ||
-            !confirmPassword ||
-            !fullName ||
-            !dateOfBirth ||
-            !gender ||
-            !email ||
-            !phone ||
-            !address ||
-            !department ||
-            !course ||
-            !semester ||
-            !admissionNumber ||
-            !admissionYear
-        ) {
+
+            /* ---------------------------------------------
+               GET VALUES
+            --------------------------------------------- */
+
+            const studentId =
+                document
+                    .getElementById("studentId")
+                    .value
+                    .trim();
+
+
+            const username =
+                document
+                    .getElementById("username")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById("confirmPassword")
+                    .value;
+
+
+            const fullName =
+                document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
+
+
+            const dateOfBirth =
+                document
+                    .getElementById("dateOfBirth")
+                    .value;
+
+
+            const gender =
+                document
+                    .getElementById("gender")
+                    .value;
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim();
+
+
+            const address =
+                document
+                    .getElementById("address")
+                    .value
+                    .trim();
+
+
+            const department =
+                document
+                    .getElementById("department")
+                    .value;
+
+
+            const course =
+                document
+                    .getElementById("course")
+                    .value;
+
+
+            const semester =
+                document
+                    .getElementById("semester")
+                    .value;
+
+
+            const admissionNumber =
+                document
+                    .getElementById("admissionNumber")
+                    .value
+                    .trim();
+
+
+            const admissionYear =
+                document
+                    .getElementById("admissionYear")
+                    .value;
+
+
+            /* ---------------------------------------------
+               REQUIRED FIELD VALIDATION
+            --------------------------------------------- */
+
+            if (
+                !studentId ||
+                !username ||
+                !password ||
+                !confirmPassword ||
+                !fullName ||
+                !dateOfBirth ||
+                !gender ||
+                !email ||
+                !phone ||
+                !address ||
+                !department ||
+                !course ||
+                !semester ||
+                !admissionNumber ||
+                !admissionYear
+            ) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Please fill in all required fields.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               PASSWORD VALIDATION
+            --------------------------------------------- */
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Password must contain at least 6 characters.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (password !== confirmPassword) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Password and Confirm Password do not match.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               EMAIL VALIDATION
+            --------------------------------------------- */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               PHONE VALIDATION
+               EXACTLY 10 DIGITS
+            --------------------------------------------- */
+
+            const phonePattern =
+                /^\d{10}$/;
+
+
+            if (!phonePattern.test(phone)) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Phone number must contain exactly 10 digits.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               DUPLICATE STUDENT ID
+            --------------------------------------------- */
+
+            const duplicateStudentId =
+                students.some(function (student) {
+
+                    return (
+                        student.studentId.toLowerCase()
+                        === studentId.toLowerCase()
+                    );
+
+                });
+
+
+            if (duplicateStudentId) {
+
+                showMessage(
+                    "registrationMessage",
+                    "This Student ID is already registered.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               DUPLICATE USERNAME
+            --------------------------------------------- */
+
+            const duplicateUsername =
+                students.some(function (student) {
+
+                    return (
+                        student.username.toLowerCase()
+                        === username.toLowerCase()
+                    );
+
+                });
+
+
+            if (duplicateUsername) {
+
+                showMessage(
+                    "registrationMessage",
+                    "This username is already registered.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               FILE DATA
+            --------------------------------------------- */
+
+            let photoData = "";
+            let certificateData = "";
+
+
+            const photoElement =
+                document.getElementById("photo");
+
+
+            const certificateElement =
+                document.getElementById(
+                    "plusTwoCertificate"
+                );
+
+
+            const photoFile =
+                photoElement &&
+                photoElement.files
+                    ? photoElement.files[0]
+                    : null;
+
+
+            const certificateFile =
+                certificateElement &&
+                certificateElement.files
+                    ? certificateElement.files[0]
+                    : null;
+
+
+            try {
+
+                if (photoFile) {
+
+                    photoData =
+                        await readFileAsDataURL(
+                            photoFile
+                        );
+
+                }
+
+
+                if (certificateFile) {
+
+                    certificateData =
+                        await readFileAsDataURL(
+                            certificateFile
+                        );
+
+                }
+
+            }
+
+            catch (error) {
+
+                showMessage(
+                    "registrationMessage",
+                    "There was a problem reading the uploaded file.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               CREATE STUDENT OBJECT
+            --------------------------------------------- */
+
+            const newStudent = {
+
+                studentId: studentId,
+
+                username: username,
+
+                password: password,
+
+                fullName: fullName,
+
+                dateOfBirth: dateOfBirth,
+
+                gender: gender,
+
+                email: email,
+
+                phone: phone,
+
+                address: address,
+
+                department: department,
+
+                course: course,
+
+                semester: semester,
+
+                admissionNumber: admissionNumber,
+
+                admissionYear: admissionYear,
+
+                photo: photoData,
+
+                plusTwoCertificate: certificateData
+
+            };
+
+
+            /* ---------------------------------------------
+               ADD STUDENT TO ARRAY
+            --------------------------------------------- */
+
+            students.push(newStudent);
+
+
+            /* ---------------------------------------------
+               RESET FORM
+            --------------------------------------------- */
+
+            studentRegistrationForm.reset();
+
+
+            populateCourseDropdown(
+                document.getElementById("course"),
+                ""
+            );
+
+
+            /* ---------------------------------------------
+               ADMIN ADD STUDENT
+            --------------------------------------------- */
+
+            if (adminAddingStudent) {
+
+                showMessage(
+                    "registrationMessage",
+                    "Student added successfully! Returning to Admin Dashboard...",
+                    "success"
+                );
+
+
+                setTimeout(function () {
+
+                    adminAddingStudent = false;
+
+                    renderAdminDashboard();
+
+                    showPage(
+                        pages.adminDashboard
+                    );
+
+                }, 1200);
+
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               NORMAL STUDENT SIGN UP
+            --------------------------------------------- */
 
             showMessage(
                 "registrationMessage",
-                "Please fill in all required fields.",
-                "error"
+                "Registration Successful! Redirecting to Student Login...",
+                "success"
             );
 
-            return;
-        }
 
+            setTimeout(function () {
 
-        if (password.length < 6) {
+                showPage(
+                    pages.studentLogin
+                );
 
-            showMessage(
-                "registrationMessage",
-                "Password must contain at least 6 characters.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if (password !== confirmPassword) {
-
-            showMessage(
-                "registrationMessage",
-                "Password and Confirm Password do not match.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(email)) {
-
-            showMessage(
-                "registrationMessage",
-                "Please enter a valid email address.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const phonePattern =
-            /^[0-9+\-\s()]{7,20}$/;
-
-        if (!phonePattern.test(phone)) {
-
-            showMessage(
-                "registrationMessage",
-                "Please enter a valid phone number.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        /* -------------------------------------------------
-           DUPLICATE CHECK
-        ------------------------------------------------- */
-
-        const duplicateStudentId =
-            students.some(function (student) {
-
-                return student.studentId.toLowerCase()
-                    === studentId.toLowerCase();
-
-            });
-
-
-        if (duplicateStudentId) {
-
-            showMessage(
-                "registrationMessage",
-                "This Student ID is already registered.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const duplicateUsername =
-            students.some(function (student) {
-
-                return student.username.toLowerCase()
-                    === username.toLowerCase();
-
-            });
-
-
-        if (duplicateUsername) {
-
-            showMessage(
-                "registrationMessage",
-                "This username is already registered.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        /* -------------------------------------------------
-           FILE READING
-        ------------------------------------------------- */
-
-        let photoData = "";
-        let certificateData = "";
-
-        const photoFile =
-            document.getElementById("photo")
-                .files[0];
-
-        const certificateFile =
-            document.getElementById("plusTwoCertificate")
-                .files[0];
-
-
-        if (photoFile) {
-
-            photoData =
-                await readFileAsDataURL(photoFile);
+            }, 1200);
 
         }
+    );
 
-
-        if (certificateFile) {
-
-            certificateData =
-                await readFileAsDataURL(certificateFile);
-
-        }
-
-
-        /* -------------------------------------------------
-           STUDENT OBJECT
-        ------------------------------------------------- */
-
-        const newStudent = {
-
-            studentId: studentId,
-
-            username: username,
-
-            password: password,
-
-            fullName: fullName,
-
-            dateOfBirth: dateOfBirth,
-
-            gender: gender,
-
-            email: email,
-
-            phone: phone,
-
-            address: address,
-
-            department: department,
-
-            course: course,
-
-            semester: semester,
-
-            admissionNumber: admissionNumber,
-
-            admissionYear: admissionYear,
-
-            photo: photoData,
-
-            plusTwoCertificate: certificateData
-
-        };
-
-
-        /* -------------------------------------------------
-           ADD TO ARRAY
-        ------------------------------------------------- */
-
-        students.push(newStudent);
-
-
-        /* -------------------------------------------------
-           SUCCESS
-        ------------------------------------------------- */
-
-        showMessage(
-            "registrationMessage",
-            "Registration Successful! Redirecting to Student Login...",
-            "success"
-        );
-
-
-        document
-            .getElementById("studentRegistrationForm")
-            .reset();
-
-
-        populateCourseDropdown(
-            document.getElementById("course"),
-            ""
-        );
-
-
-        setTimeout(function () {
-
-            showPage(pages.studentLogin);
-
-        }, 1500);
-
-    });
+}
 
 
 /* =========================================================
@@ -608,7 +896,9 @@ function readFileAsDataURL(file) {
 
     return new Promise(function (resolve, reject) {
 
-        const reader = new FileReader();
+        const reader =
+            new FileReader();
+
 
         reader.onload = function () {
 
@@ -616,11 +906,13 @@ function readFileAsDataURL(file) {
 
         };
 
+
         reader.onerror = function () {
 
             reject(reader.error);
 
         };
+
 
         reader.readAsDataURL(file);
 
@@ -633,79 +925,134 @@ function readFileAsDataURL(file) {
    STUDENT LOGIN
 ========================================================= */
 
-document
-    .getElementById("studentLoginForm")
-    .addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-
-        clearMessage("studentLoginMessage");
+const studentLoginForm =
+    document.getElementById(
+        "studentLoginForm"
+    );
 
 
-        const loginValue =
-            document.getElementById(
-                "studentLoginUsername"
-            ).value.trim();
+if (studentLoginForm) {
+
+    studentLoginForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
 
 
-        const password =
-            document.getElementById(
-                "studentLoginPassword"
-            ).value;
-
-
-        const student =
-            students.find(function (student) {
-
-                return (
-                    (
-                        student.studentId.toLowerCase()
-                        === loginValue.toLowerCase()
-                    )
-                    ||
-                    (
-                        student.username.toLowerCase()
-                        === loginValue.toLowerCase()
-                    )
-                )
-                &&
-                student.password === password;
-
-            });
-
-
-        if (!student) {
-
-            showMessage(
-                "studentLoginMessage",
-                "Invalid Student ID/Username or Password.",
-                "error"
+            clearMessage(
+                "studentLoginMessage"
             );
 
-            return;
+
+            const loginElement =
+                document.getElementById(
+                    "studentLoginUsername"
+                );
+
+
+            const passwordElement =
+                document.getElementById(
+                    "studentLoginPassword"
+                );
+
+
+            const loginValue =
+                loginElement
+                    ? loginElement.value.trim()
+                    : "";
+
+
+            const password =
+                passwordElement
+                    ? passwordElement.value
+                    : "";
+
+
+            if (!loginValue || !password) {
+
+                showMessage(
+                    "studentLoginMessage",
+                    "Please enter your Student ID/Username and Password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               FIND STUDENT
+            --------------------------------------------- */
+
+            const student =
+                students.find(function (student) {
+
+                    const idMatches =
+                        student.studentId
+                            .toLowerCase()
+                        ===
+                        loginValue.toLowerCase();
+
+
+                    const usernameMatches =
+                        student.username
+                            .toLowerCase()
+                        ===
+                        loginValue.toLowerCase();
+
+
+                    return (
+                        (idMatches || usernameMatches)
+                        &&
+                        student.password === password
+                    );
+
+                });
+
+
+            /* ---------------------------------------------
+               INVALID LOGIN
+            --------------------------------------------- */
+
+            if (!student) {
+
+                showMessage(
+                    "studentLoginMessage",
+                    "Invalid Student ID/Username or Password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               SUCCESSFUL LOGIN
+            --------------------------------------------- */
+
+            currentStudentId =
+                student.studentId;
+
+
+            studentLoginForm.reset();
+
+
+            displayStudentDashboard(
+                student
+            );
+
+
+            showPage(
+                pages.studentDashboard
+            );
+
         }
+    );
 
-
-        /* -----------------------------------------------
-           Correct student found
-        ------------------------------------------------ */
-
-        currentStudentId =
-            student.studentId;
-
-
-        document
-            .getElementById("studentLoginForm")
-            .reset();
-
-
-        displayStudentDashboard(student);
-
-
-        showPage(pages.studentDashboard);
-
-    });
+}
 
 
 /* =========================================================
@@ -718,6 +1065,11 @@ function displayStudentDashboard(student) {
         document.getElementById(
             "studentDashboardContent"
         );
+
+
+    if (!content) {
+        return;
+    }
 
 
     const photoHTML =
@@ -746,11 +1098,15 @@ function displayStudentDashboard(student) {
 
             <div>
 
-                <h2>${escapeHTML(student.fullName)}</h2>
+                <h2>
+                    ${escapeHTML(student.fullName)}
+                </h2>
 
                 <p class="profile-id">
+
                     Student ID:
                     ${escapeHTML(student.studentId)}
+
                 </p>
 
             </div>
@@ -895,7 +1251,9 @@ function detailItem(label, value) {
             </span>
 
             <span class="detail-value">
-                ${escapeHTML(value || "Not provided")}
+                ${escapeHTML(
+                    value || "Not provided"
+                )}
             </span>
 
         </div>
@@ -914,6 +1272,10 @@ function getDocumentsHTML(student) {
     let html = "";
 
 
+    /* ---------------------------------------------
+       STUDENT PHOTO
+    --------------------------------------------- */
+
     if (student.photo) {
 
         html += `
@@ -927,9 +1289,11 @@ function getDocumentsHTML(student) {
                     </span>
 
                     <div>
+
                         <strong>
                             Student Photograph
                         </strong>
+
                     </div>
 
                 </div>
@@ -937,6 +1301,7 @@ function getDocumentsHTML(student) {
                 <a
                     href="${student.photo}"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     View
                 </a>
@@ -947,6 +1312,10 @@ function getDocumentsHTML(student) {
 
     }
 
+
+    /* ---------------------------------------------
+       PLUS TWO CERTIFICATE
+    --------------------------------------------- */
 
     if (student.plusTwoCertificate) {
 
@@ -961,9 +1330,11 @@ function getDocumentsHTML(student) {
                     </span>
 
                     <div>
+
                         <strong>
                             12th / Plus Two Certificate
                         </strong>
+
                     </div>
 
                 </div>
@@ -971,6 +1342,7 @@ function getDocumentsHTML(student) {
                 <a
                     href="${student.plusTwoCertificate}"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     View Document
                 </a>
@@ -981,6 +1353,10 @@ function getDocumentsHTML(student) {
 
     }
 
+
+    /* ---------------------------------------------
+       NO DOCUMENTS
+    --------------------------------------------- */
 
     if (!html) {
 
@@ -1005,46 +1381,64 @@ function getDocumentsHTML(student) {
 ========================================================= */
 
 document
-    .querySelectorAll("[data-student-section]")
+    .querySelectorAll(
+        "[data-student-section]"
+    )
     .forEach(function (button) {
 
-        button.addEventListener("click", function () {
+        button.addEventListener(
+            "click",
+            function () {
 
-            if (!currentStudentId) {
-                return;
+                if (!currentStudentId) {
+                    return;
+                }
+
+
+                const student =
+                    students.find(
+                        function (student) {
+
+                            return (
+                                student.studentId
+                                ===
+                                currentStudentId
+                            );
+
+                        }
+                    );
+
+
+                if (student) {
+
+                    displayStudentDashboard(
+                        student
+                    );
+
+                }
+
+
+                document
+                    .querySelectorAll(
+                        "[data-student-section]"
+                    )
+                    .forEach(
+                        function (btn) {
+
+                            btn.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                this.classList.add(
+                    "active"
+                );
+
             }
-
-
-            const student =
-                students.find(function (student) {
-
-                    return student.studentId
-                        === currentStudentId;
-
-                });
-
-
-            if (student) {
-
-                displayStudentDashboard(student);
-
-            }
-
-
-            document
-                .querySelectorAll(
-                    "[data-student-section]"
-                )
-                .forEach(function (btn) {
-
-                    btn.classList.remove("active");
-
-                });
-
-
-            this.classList.add("active");
-
-        });
+        );
 
     });
 
@@ -1053,84 +1447,125 @@ document
    STUDENT LOGOUT
 ========================================================= */
 
-document
-    .getElementById("studentLogoutButton")
-    .addEventListener("click", function () {
+const studentLogoutButton =
+    document.getElementById(
+        "studentLogoutButton"
+    );
 
-        currentStudentId = null;
 
-        showPage(pages.role);
+if (studentLogoutButton) {
 
-    });
+    studentLogoutButton.addEventListener(
+        "click",
+        function () {
+
+            currentStudentId = null;
+
+            showPage(pages.role);
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    ADMIN LOGIN
 ========================================================= */
 
-document
-    .getElementById("adminLoginForm")
-    .addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-
-        clearMessage("adminLoginMessage");
+const adminLoginForm =
+    document.getElementById(
+        "adminLoginForm"
+    );
 
 
-        const username =
-            document.getElementById(
-                "adminUsername"
-            ).value.trim();
+if (adminLoginForm) {
+
+    adminLoginForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
 
 
-        const password =
-            document.getElementById(
-                "adminPassword"
-            ).value;
-
-
-        if (
-            username === ADMIN_USERNAME &&
-            password === ADMIN_PASSWORD
-        ) {
-
-            document
-                .getElementById("adminLoginForm")
-                .reset();
-
-
-            renderAdminDashboard();
-
-
-            showPage(pages.adminDashboard);
-
-        }
-
-        else {
-
-            showMessage(
-                "adminLoginMessage",
-                "Invalid Admin Username or Password.",
-                "error"
+            clearMessage(
+                "adminLoginMessage"
             );
 
-        }
 
-    });
+            const username =
+                document
+                    .getElementById(
+                        "adminUsername"
+                    )
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById(
+                        "adminPassword"
+                    )
+                    .value;
+
+
+            if (
+                username === ADMIN_USERNAME
+                &&
+                password === ADMIN_PASSWORD
+            ) {
+
+                adminLoginForm.reset();
+
+
+                renderAdminDashboard();
+
+
+                showPage(
+                    pages.adminDashboard
+                );
+
+            }
+
+            else {
+
+                showMessage(
+                    "adminLoginMessage",
+                    "Invalid Admin Username or Password.",
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    ADMIN LOGOUT
 ========================================================= */
 
-document
-    .getElementById("adminLogoutButton")
-    .addEventListener("click", function () {
+const adminLogoutButton =
+    document.getElementById(
+        "adminLogoutButton"
+    );
 
-        showPage(pages.role);
 
-    });
+if (adminLogoutButton) {
+
+    adminLogoutButton.addEventListener(
+        "click",
+        function () {
+
+            showPage(pages.role);
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -1152,15 +1587,38 @@ function renderAdminDashboard() {
 
 function updateStatistics() {
 
-    document
-        .getElementById("totalStudents")
-        .textContent = students.length;
+    const totalStudents =
+        document.getElementById(
+            "totalStudents"
+        );
+
+
+    const totalDepartments =
+        document.getElementById(
+            "totalDepartments"
+        );
+
+
+    const totalCourses =
+        document.getElementById(
+            "totalCourses"
+        );
+
+
+    if (totalStudents) {
+
+        totalStudents.textContent =
+            students.length;
+
+    }
 
 
     const departments =
         new Set(
             students.map(function (student) {
+
                 return student.department;
+
             })
         );
 
@@ -1168,19 +1626,27 @@ function updateStatistics() {
     const courses =
         new Set(
             students.map(function (student) {
+
                 return student.course;
+
             })
         );
 
 
-    document
-        .getElementById("totalDepartments")
-        .textContent = departments.size;
+    if (totalDepartments) {
+
+        totalDepartments.textContent =
+            departments.size;
+
+    }
 
 
-    document
-        .getElementById("totalCourses")
-        .textContent = courses.size;
+    if (totalCourses) {
+
+        totalCourses.textContent =
+            courses.size;
+
+    }
 
 }
 
@@ -1197,67 +1663,104 @@ function renderStudentTable() {
         );
 
 
-    const search =
+    if (!tbody) {
+        return;
+    }
+
+
+    const searchElement =
         document.getElementById(
             "studentSearch"
-        ).value.trim().toLowerCase();
+        );
+
+
+    const departmentElement =
+        document.getElementById(
+            "departmentFilter"
+        );
+
+
+    const courseElement =
+        document.getElementById(
+            "courseFilter"
+        );
+
+
+    const search =
+        searchElement
+            ? searchElement.value
+                .trim()
+                .toLowerCase()
+            : "";
 
 
     const department =
-        document.getElementById(
-            "departmentFilter"
-        ).value;
+        departmentElement
+            ? departmentElement.value
+            : "";
 
 
     const course =
-        document.getElementById(
-            "courseFilter"
-        ).value;
+        courseElement
+            ? courseElement.value
+            : "";
 
 
     const filteredStudents =
-        students.filter(function (student) {
+        students.filter(
+            function (student) {
 
-            const searchableText = (
+                const searchableText = (
 
-                student.studentId +
-                " " +
-                student.fullName +
-                " " +
-                student.email +
-                " " +
-                student.course +
-                " " +
-                student.department
+                    student.studentId +
+                    " " +
+                    student.fullName +
+                    " " +
+                    student.email +
+                    " " +
+                    student.course +
+                    " " +
+                    student.department
 
-            ).toLowerCase();
-
-
-            const matchesSearch =
-                searchableText.includes(search);
+                ).toLowerCase();
 
 
-            const matchesDepartment =
-                !department ||
-                student.department === department;
+                const matchesSearch =
+                    searchableText.includes(
+                        search
+                    );
 
 
-            const matchesCourse =
-                !course ||
-                student.course === course;
+                const matchesDepartment =
+                    !department ||
+                    student.department
+                    ===
+                    department;
 
 
-            return (
-                matchesSearch &&
-                matchesDepartment &&
-                matchesCourse
-            );
+                const matchesCourse =
+                    !course ||
+                    student.course
+                    ===
+                    course;
 
-        });
+
+                return (
+                    matchesSearch &&
+                    matchesDepartment &&
+                    matchesCourse
+                );
+
+            }
+        );
 
 
     tbody.innerHTML = "";
 
+
+    /* ---------------------------------------------
+       NO RESULTS
+    --------------------------------------------- */
 
     if (filteredStudents.length === 0) {
 
@@ -1294,81 +1797,105 @@ function renderStudentTable() {
     }
 
 
-    filteredStudents.forEach(function (student) {
+    /* ---------------------------------------------
+       STUDENT ROWS
+    --------------------------------------------- */
 
-        const row =
-            document.createElement("tr");
+    filteredStudents.forEach(
+        function (student) {
 
-
-        row.innerHTML = `
-
-            <td>
-                ${escapeHTML(student.studentId)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.fullName)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.email)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.phone)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.department)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.course)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.semester)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.admissionYear)}
-            </td>
-
-            <td>
-
-                <div class="action-buttons">
-
-                    <button
-                        class="small-button view-button"
-                        onclick="viewStudent('${escapeAttribute(student.studentId)}')"
-                    >
-                        View
-                    </button>
-
-                    <button
-                        class="small-button edit-button"
-                        onclick="editStudent('${escapeAttribute(student.studentId)}')"
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        class="small-button delete-button"
-                        onclick="deleteStudent('${escapeAttribute(student.studentId)}')"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </td>
-
-        `;
+            const row =
+                document.createElement(
+                    "tr"
+                );
 
 
-        tbody.appendChild(row);
+            row.innerHTML = `
 
-    });
+                <td>
+                    ${escapeHTML(
+                        student.studentId
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.fullName
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.email
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.phone
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.department
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.course
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.semester
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.admissionYear
+                    )}
+                </td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button
+                            class="small-button view-button"
+                            onclick="viewStudent('${escapeAttribute(student.studentId)}')"
+                        >
+                            View
+                        </button>
+
+                        <button
+                            class="small-button edit-button"
+                            onclick="editStudent('${escapeAttribute(student.studentId)}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="small-button delete-button"
+                            onclick="deleteStudent('${escapeAttribute(student.studentId)}')"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
 
 }
 
@@ -1377,55 +1904,95 @@ function renderStudentTable() {
    SEARCH
 ========================================================= */
 
-document
-    .getElementById("studentSearch")
-    .addEventListener("input", function () {
+const studentSearch =
+    document.getElementById(
+        "studentSearch"
+    );
 
-        renderStudentTable();
 
-    });
+if (studentSearch) {
+
+    studentSearch.addEventListener(
+        "input",
+        function () {
+
+            renderStudentTable();
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    DEPARTMENT FILTER
 ========================================================= */
 
-document
-    .getElementById("departmentFilter")
-    .addEventListener("change", function () {
-
-        const department = this.value;
-
-
-        populateCourseDropdown(
-            document.getElementById("courseFilter"),
-            department
-        );
+const departmentFilter =
+    document.getElementById(
+        "departmentFilter"
+    );
 
 
-        const courseFilter =
-            document.getElementById("courseFilter");
+if (departmentFilter) {
+
+    departmentFilter.addEventListener(
+        "change",
+        function () {
+
+            const department =
+                this.value;
 
 
-        courseFilter.value = "";
+            const courseFilter =
+                document.getElementById(
+                    "courseFilter"
+                );
 
 
-        renderStudentTable();
+            if (courseFilter) {
 
-    });
+                populateCourseDropdown(
+                    courseFilter,
+                    department
+                );
+
+
+                courseFilter.value = "";
+
+            }
+
+
+            renderStudentTable();
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    COURSE FILTER
 ========================================================= */
 
-document
-    .getElementById("courseFilter")
-    .addEventListener("change", function () {
+const courseFilter =
+    document.getElementById(
+        "courseFilter"
+    );
 
-        renderStudentTable();
 
-    });
+if (courseFilter) {
+
+    courseFilter.addEventListener(
+        "change",
+        function () {
+
+            renderStudentTable();
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -1435,16 +2002,24 @@ document
 function viewStudent(studentId) {
 
     const student =
-        students.find(function (student) {
+        students.find(
+            function (student) {
 
-            return student.studentId === studentId;
+                return (
+                    student.studentId
+                    ===
+                    studentId
+                );
 
-        });
+            }
+        );
 
 
     if (!student) {
 
-        alert("Student not found.");
+        alert(
+            "Student not found."
+        );
 
         return;
 
@@ -1455,6 +2030,11 @@ function viewStudent(studentId) {
         document.getElementById(
             "studentDetailsContent"
         );
+
+
+    if (!content) {
+        return;
+    }
 
 
     const photoHTML =
@@ -1477,7 +2057,9 @@ function viewStudent(studentId) {
 
     content.innerHTML = `
 
-        <h2>Student Complete Profile</h2>
+        <h2>
+            Student Complete Profile
+        </h2>
 
 
         <div class="student-detail-top">
@@ -1487,14 +2069,21 @@ function viewStudent(studentId) {
             <div>
 
                 <h3>
-                    ${escapeHTML(student.fullName)}
+                    ${escapeHTML(
+                        student.fullName
+                    )}
                 </h3>
 
                 <p>
+
                     Student ID:
+
                     <strong>
-                        ${escapeHTML(student.studentId)}
+                        ${escapeHTML(
+                            student.studentId
+                        )}
                     </strong>
+
                 </p>
 
             </div>
@@ -1504,7 +2093,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Account Details</h3>
+            <h3>
+                Account Details
+            </h3>
 
             <div class="detail-grid">
 
@@ -1525,7 +2116,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Personal Details</h3>
+            <h3>
+                Personal Details
+            </h3>
 
             <div class="detail-grid">
 
@@ -1551,7 +2144,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Contact Details</h3>
+            <h3>
+                Contact Details
+            </h3>
 
             <div class="detail-grid">
 
@@ -1577,7 +2172,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Academic Details</h3>
+            <h3>
+                Academic Details
+            </h3>
 
             <div class="detail-grid">
 
@@ -1603,7 +2200,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Admission Details</h3>
+            <h3>
+                Admission Details
+            </h3>
 
             <div class="detail-grid">
 
@@ -1624,7 +2223,9 @@ function viewStudent(studentId) {
 
         <div class="detail-card">
 
-            <h3>Uploaded Documents</h3>
+            <h3>
+                Uploaded Documents
+            </h3>
 
             ${getDocumentsHTML(student)}
 
@@ -1633,26 +2234,57 @@ function viewStudent(studentId) {
     `;
 
 
-    document
-        .getElementById("studentDetailsModal")
-        .classList.add("show");
+    const modal =
+        document.getElementById(
+            "studentDetailsModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.add(
+            "show"
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   CLOSE VIEW MODAL
+   CLOSE STUDENT DETAILS MODAL
 ========================================================= */
 
-document
-    .getElementById("closeStudentDetails")
-    .addEventListener("click", function () {
+const closeStudentDetails =
+    document.getElementById(
+        "closeStudentDetails"
+    );
 
-        document
-            .getElementById("studentDetailsModal")
-            .classList.remove("show");
 
-    });
+if (closeStudentDetails) {
+
+    closeStudentDetails.addEventListener(
+        "click",
+        function () {
+
+            const modal =
+                document.getElementById(
+                    "studentDetailsModal"
+                );
+
+
+            if (modal) {
+
+                modal.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -1662,107 +2294,172 @@ document
 function editStudent(studentId) {
 
     const student =
-        students.find(function (student) {
+        students.find(
+            function (student) {
 
-            return student.studentId === studentId;
+                return (
+                    student.studentId
+                    ===
+                    studentId
+                );
 
-        });
+            }
+        );
 
 
     if (!student) {
 
-        alert("Student not found.");
+        alert(
+            "Student not found."
+        );
 
         return;
 
     }
 
 
-    editingStudentId = studentId;
+    editingStudentId =
+        studentId;
 
 
     document
-        .getElementById("editOriginalStudentId")
-        .value = student.studentId;
+        .getElementById(
+            "editOriginalStudentId"
+        )
+        .value =
+        student.studentId;
 
 
     document
-        .getElementById("editStudentId")
-        .value = student.studentId;
+        .getElementById(
+            "editStudentId"
+        )
+        .value =
+        student.studentId;
 
 
     document
-        .getElementById("editUsername")
-        .value = student.username;
+        .getElementById(
+            "editUsername"
+        )
+        .value =
+        student.username;
 
 
     document
-        .getElementById("editFullName")
-        .value = student.fullName;
+        .getElementById(
+            "editFullName"
+        )
+        .value =
+        student.fullName;
 
 
     document
-        .getElementById("editDateOfBirth")
-        .value = student.dateOfBirth;
+        .getElementById(
+            "editDateOfBirth"
+        )
+        .value =
+        student.dateOfBirth;
 
 
     document
-        .getElementById("editGender")
-        .value = student.gender;
+        .getElementById(
+            "editGender"
+        )
+        .value =
+        student.gender;
 
 
     document
-        .getElementById("editEmail")
-        .value = student.email;
+        .getElementById(
+            "editEmail"
+        )
+        .value =
+        student.email;
 
 
     document
-        .getElementById("editPhone")
-        .value = student.phone;
+        .getElementById(
+            "editPhone"
+        )
+        .value =
+        student.phone;
 
 
     document
-        .getElementById("editAddress")
-        .value = student.address;
+        .getElementById(
+            "editAddress"
+        )
+        .value =
+        student.address;
 
 
     document
-        .getElementById("editDepartment")
-        .value = student.department;
+        .getElementById(
+            "editDepartment"
+        )
+        .value =
+        student.department;
 
 
     populateCourseDropdown(
-        document.getElementById("editCourse"),
+        document.getElementById(
+            "editCourse"
+        ),
         student.department
     );
 
 
     document
-        .getElementById("editCourse")
-        .value = student.course;
+        .getElementById(
+            "editCourse"
+        )
+        .value =
+        student.course;
 
 
     document
-        .getElementById("editSemester")
-        .value = student.semester;
+        .getElementById(
+            "editSemester"
+        )
+        .value =
+        student.semester;
 
 
     document
-        .getElementById("editAdmissionNumber")
-        .value = student.admissionNumber;
+        .getElementById(
+            "editAdmissionNumber"
+        )
+        .value =
+        student.admissionNumber;
 
 
     document
-        .getElementById("editAdmissionYear")
-        .value = student.admissionYear;
+        .getElementById(
+            "editAdmissionYear"
+        )
+        .value =
+        student.admissionYear;
 
 
-    clearMessage("editStudentMessage");
+    clearMessage(
+        "editStudentMessage"
+    );
 
 
-    document
-        .getElementById("editStudentModal")
-        .classList.add("show");
+    const modal =
+        document.getElementById(
+            "editStudentModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.add(
+            "show"
+        );
+
+    }
 
 }
 
@@ -1771,321 +2468,524 @@ function editStudent(studentId) {
    EDIT DEPARTMENT → COURSE
 ========================================================= */
 
-document
-    .getElementById("editDepartment")
-    .addEventListener("change", function () {
+const editDepartment =
+    document.getElementById(
+        "editDepartment"
+    );
 
-        populateCourseDropdown(
-            document.getElementById("editCourse"),
-            this.value
-        );
 
-    });
+if (editDepartment) {
+
+    editDepartment.addEventListener(
+        "change",
+        function () {
+
+            populateCourseDropdown(
+                document.getElementById(
+                    "editCourse"
+                ),
+                this.value
+            );
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    SAVE EDITED STUDENT
 ========================================================= */
 
-document
-    .getElementById("editStudentForm")
-    .addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-
-        const newStudentId =
-            document
-                .getElementById("editStudentId")
-                .value.trim();
+const editStudentForm =
+    document.getElementById(
+        "editStudentForm"
+    );
 
 
-        const username =
-            document
-                .getElementById("editUsername")
-                .value.trim();
+if (editStudentForm) {
+
+    editStudentForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
 
 
-        const fullName =
-            document
-                .getElementById("editFullName")
-                .value.trim();
-
-
-        const dateOfBirth =
-            document
-                .getElementById("editDateOfBirth")
-                .value;
-
-
-        const gender =
-            document
-                .getElementById("editGender")
-                .value;
-
-
-        const email =
-            document
-                .getElementById("editEmail")
-                .value.trim();
-
-
-        const phone =
-            document
-                .getElementById("editPhone")
-                .value.trim();
-
-
-        const address =
-            document
-                .getElementById("editAddress")
-                .value.trim();
-
-
-        const department =
-            document
-                .getElementById("editDepartment")
-                .value;
-
-
-        const course =
-            document
-                .getElementById("editCourse")
-                .value;
-
-
-        const semester =
-            document
-                .getElementById("editSemester")
-                .value;
-
-
-        const admissionNumber =
-            document
-                .getElementById("editAdmissionNumber")
-                .value.trim();
-
-
-        const admissionYear =
-            document
-                .getElementById("editAdmissionYear")
-                .value;
-
-
-        if (
-            !newStudentId ||
-            !username ||
-            !fullName ||
-            !dateOfBirth ||
-            !gender ||
-            !email ||
-            !phone ||
-            !address ||
-            !department ||
-            !course ||
-            !semester ||
-            !admissionNumber ||
-            !admissionYear
-        ) {
-
-            showMessage(
-                "editStudentMessage",
-                "Please fill in all required fields.",
-                "error"
+            clearMessage(
+                "editStudentMessage"
             );
 
-            return;
 
-        }
-
-
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-        if (!emailPattern.test(email)) {
-
-            showMessage(
-                "editStudentMessage",
-                "Please enter a valid email address.",
-                "error"
-            );
-
-            return;
-
-        }
+            const newStudentId =
+                document
+                    .getElementById(
+                        "editStudentId"
+                    )
+                    .value
+                    .trim();
 
 
-        const duplicateId =
-            students.some(function (student) {
+            const username =
+                document
+                    .getElementById(
+                        "editUsername"
+                    )
+                    .value
+                    .trim();
 
-                return (
-                    student.studentId.toLowerCase()
-                    === newStudentId.toLowerCase()
-                    &&
-                    student.studentId
-                    !== editingStudentId
+
+            const fullName =
+                document
+                    .getElementById(
+                        "editFullName"
+                    )
+                    .value
+                    .trim();
+
+
+            const dateOfBirth =
+                document
+                    .getElementById(
+                        "editDateOfBirth"
+                    )
+                    .value;
+
+
+            const gender =
+                document
+                    .getElementById(
+                        "editGender"
+                    )
+                    .value;
+
+
+            const email =
+                document
+                    .getElementById(
+                        "editEmail"
+                    )
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById(
+                        "editPhone"
+                    )
+                    .value
+                    .trim();
+
+
+            const address =
+                document
+                    .getElementById(
+                        "editAddress"
+                    )
+                    .value
+                    .trim();
+
+
+            const department =
+                document
+                    .getElementById(
+                        "editDepartment"
+                    )
+                    .value;
+
+
+            const course =
+                document
+                    .getElementById(
+                        "editCourse"
+                    )
+                    .value;
+
+
+            const semester =
+                document
+                    .getElementById(
+                        "editSemester"
+                    )
+                    .value;
+
+
+            const admissionNumber =
+                document
+                    .getElementById(
+                        "editAdmissionNumber"
+                    )
+                    .value
+                    .trim();
+
+
+            const admissionYear =
+                document
+                    .getElementById(
+                        "editAdmissionYear"
+                    )
+                    .value;
+
+
+            /* ---------------------------------------------
+               REQUIRED FIELDS
+            --------------------------------------------- */
+
+            if (
+                !newStudentId ||
+                !username ||
+                !fullName ||
+                !dateOfBirth ||
+                !gender ||
+                !email ||
+                !phone ||
+                !address ||
+                !department ||
+                !course ||
+                !semester ||
+                !admissionNumber ||
+                !admissionYear
+            ) {
+
+                showMessage(
+                    "editStudentMessage",
+                    "Please fill in all required fields.",
+                    "error"
                 );
 
-            });
+                return;
+
+            }
 
 
-        if (duplicateId) {
+            /* ---------------------------------------------
+               EMAIL VALIDATION
+            --------------------------------------------- */
 
-            showMessage(
-                "editStudentMessage",
-                "Another student already uses this Student ID.",
-                "error"
-            );
-
-            return;
-
-        }
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-        const duplicateUsername =
-            students.some(function (student) {
+            if (!emailPattern.test(email)) {
 
-                return (
-                    student.username.toLowerCase()
-                    === username.toLowerCase()
-                    &&
-                    student.studentId
-                    !== editingStudentId
+                showMessage(
+                    "editStudentMessage",
+                    "Please enter a valid email address.",
+                    "error"
                 );
 
-            });
+                return;
+
+            }
 
 
-        if (duplicateUsername) {
+            /* ---------------------------------------------
+               PHONE VALIDATION
+               EXACTLY 10 DIGITS
+            --------------------------------------------- */
 
-            showMessage(
-                "editStudentMessage",
-                "Another student already uses this username.",
-                "error"
+            const phonePattern =
+                /^\d{10}$/;
+
+
+            if (!phonePattern.test(phone)) {
+
+                showMessage(
+                    "editStudentMessage",
+                    "Phone number must contain exactly 10 digits.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               DUPLICATE STUDENT ID
+            --------------------------------------------- */
+
+            const duplicateId =
+                students.some(
+                    function (student) {
+
+                        return (
+
+                            student.studentId
+                                .toLowerCase()
+                            ===
+                            newStudentId
+                                .toLowerCase()
+
+                            &&
+
+                            student.studentId
+                            !==
+                            editingStudentId
+
+                        );
+
+                    }
+                );
+
+
+            if (duplicateId) {
+
+                showMessage(
+                    "editStudentMessage",
+                    "Another student already uses this Student ID.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               DUPLICATE USERNAME
+            --------------------------------------------- */
+
+            const duplicateUsername =
+                students.some(
+                    function (student) {
+
+                        return (
+
+                            student.username
+                                .toLowerCase()
+                            ===
+                            username
+                                .toLowerCase()
+
+                            &&
+
+                            student.studentId
+                            !==
+                            editingStudentId
+
+                        );
+
+                    }
+                );
+
+
+            if (duplicateUsername) {
+
+                showMessage(
+                    "editStudentMessage",
+                    "Another student already uses this username.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               FIND ORIGINAL STUDENT
+            --------------------------------------------- */
+
+            const index =
+                students.findIndex(
+                    function (student) {
+
+                        return (
+                            student.studentId
+                            ===
+                            editingStudentId
+                        );
+
+                    }
+                );
+
+
+            if (index === -1) {
+
+                showMessage(
+                    "editStudentMessage",
+                    "Student record could not be found.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               PRESERVE PASSWORD + FILES
+            --------------------------------------------- */
+
+            const oldStudent =
+                students[index];
+
+
+            students[index] = {
+
+                studentId:
+                    newStudentId,
+
+                username:
+                    username,
+
+                password:
+                    oldStudent.password,
+
+                fullName:
+                    fullName,
+
+                dateOfBirth:
+                    dateOfBirth,
+
+                gender:
+                    gender,
+
+                email:
+                    email,
+
+                phone:
+                    phone,
+
+                address:
+                    address,
+
+                department:
+                    department,
+
+                course:
+                    course,
+
+                semester:
+                    semester,
+
+                admissionNumber:
+                    admissionNumber,
+
+                admissionYear:
+                    admissionYear,
+
+                photo:
+                    oldStudent.photo,
+
+                plusTwoCertificate:
+                    oldStudent.plusTwoCertificate
+
+            };
+
+
+            editingStudentId =
+                null;
+
+
+            const modal =
+                document.getElementById(
+                    "editStudentModal"
+                );
+
+
+            if (modal) {
+
+                modal.classList.remove(
+                    "show"
+                );
+
+            }
+
+
+            renderAdminDashboard();
+
+
+            alert(
+                "Student details updated successfully."
             );
 
-            return;
-
         }
+    );
 
-
-        const index =
-            students.findIndex(function (student) {
-
-                return student.studentId
-                    === editingStudentId;
-
-            });
-
-
-        if (index === -1) {
-
-            showMessage(
-                "editStudentMessage",
-                "Student record could not be found.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        /* -------------------------------------------------
-           PRESERVE PASSWORD AND FILES
-        ------------------------------------------------- */
-
-        const oldStudent =
-            students[index];
-
-
-        students[index] = {
-
-            studentId: newStudentId,
-
-            username: username,
-
-            password: oldStudent.password,
-
-            fullName: fullName,
-
-            dateOfBirth: dateOfBirth,
-
-            gender: gender,
-
-            email: email,
-
-            phone: phone,
-
-            address: address,
-
-            department: department,
-
-            course: course,
-
-            semester: semester,
-
-            admissionNumber: admissionNumber,
-
-            admissionYear: admissionYear,
-
-            photo: oldStudent.photo,
-
-            plusTwoCertificate:
-                oldStudent.plusTwoCertificate
-
-        };
-
-
-        editingStudentId = null;
-
-
-        document
-            .getElementById("editStudentModal")
-            .classList.remove("show");
-
-
-        renderAdminDashboard();
-
-
-        alert("Student details updated successfully.");
-
-    });
+}
 
 
 /* =========================================================
    CANCEL EDIT
 ========================================================= */
 
-document
-    .getElementById("cancelEditButton")
-    .addEventListener("click", function () {
+const cancelEditButton =
+    document.getElementById(
+        "cancelEditButton"
+    );
 
-        document
-            .getElementById("editStudentModal")
-            .classList.remove("show");
 
-        editingStudentId = null;
+if (cancelEditButton) {
 
-    });
+    cancelEditButton.addEventListener(
+        "click",
+        function () {
+
+            const modal =
+                document.getElementById(
+                    "editStudentModal"
+                );
+
+
+            if (modal) {
+
+                modal.classList.remove(
+                    "show"
+                );
+
+            }
+
+
+            editingStudentId =
+                null;
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    CLOSE EDIT MODAL
 ========================================================= */
 
-document
-    .getElementById("closeEditStudent")
-    .addEventListener("click", function () {
+const closeEditStudent =
+    document.getElementById(
+        "closeEditStudent"
+    );
 
-        document
-            .getElementById("editStudentModal")
-            .classList.remove("show");
 
-        editingStudentId = null;
+if (closeEditStudent) {
 
-    });
+    closeEditStudent.addEventListener(
+        "click",
+        function () {
+
+            const modal =
+                document.getElementById(
+                    "editStudentModal"
+                );
+
+
+            if (modal) {
+
+                modal.classList.remove(
+                    "show"
+                );
+
+            }
+
+
+            editingStudentId =
+                null;
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -2095,16 +2995,24 @@ document
 function deleteStudent(studentId) {
 
     const student =
-        students.find(function (student) {
+        students.find(
+            function (student) {
 
-            return student.studentId === studentId;
+                return (
+                    student.studentId
+                    ===
+                    studentId
+                );
 
-        });
+            }
+        );
 
 
     if (!student) {
 
-        alert("Student not found.");
+        alert(
+            "Student not found."
+        );
 
         return;
 
@@ -2118,23 +3026,30 @@ function deleteStudent(studentId) {
 
 
     if (!confirmation) {
-
         return;
-
     }
 
 
     const index =
-        students.findIndex(function (student) {
+        students.findIndex(
+            function (student) {
 
-            return student.studentId === studentId;
+                return (
+                    student.studentId
+                    ===
+                    studentId
+                );
 
-        });
+            }
+        );
 
 
     if (index !== -1) {
 
-        students.splice(index, 1);
+        students.splice(
+            index,
+            1
+        );
 
     }
 
@@ -2142,7 +3057,9 @@ function deleteStudent(studentId) {
     renderAdminDashboard();
 
 
-    alert("Student record deleted successfully.");
+    alert(
+        "Student record deleted successfully."
+    );
 
 }
 
@@ -2151,143 +3068,120 @@ function deleteStudent(studentId) {
    ADMIN ADD STUDENT
 ========================================================= */
 
-document
-    .getElementById("adminAddStudentButton")
-    .addEventListener("click", function () {
-
-        openAdminAddStudent();
-
-    });
-
-
-document
-    .getElementById("adminAddStudentNav")
-    .addEventListener("click", function () {
-
-        openAdminAddStudent();
-
-    });
-
-
-function openAdminAddStudent() {
-
-    /*
-        Admin Add Student uses the same registration form.
-
-        This allows the admin to add a new student without
-        creating another HTML page.
-    */
-
-    clearMessage("registrationMessage");
-
-    document
-        .getElementById("studentRegistrationForm")
-        .reset();
-
-
-    populateCourseDropdown(
-        document.getElementById("course"),
-        ""
+const adminAddStudentButton =
+    document.getElementById(
+        "adminAddStudentButton"
     );
 
 
-    showPage(pages.registration);
+if (adminAddStudentButton) {
+
+    adminAddStudentButton.addEventListener(
+        "click",
+        function () {
+
+            openAdminAddStudent();
+
+        }
+    );
+
+}
+
+
+const adminAddStudentNav =
+    document.getElementById(
+        "adminAddStudentNav"
+    );
+
+
+if (adminAddStudentNav) {
+
+    adminAddStudentNav.addEventListener(
+        "click",
+        function () {
+
+            openAdminAddStudent();
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   AFTER ADMIN ADD THROUGH REGISTRATION
+   OPEN ADMIN ADD STUDENT
 ========================================================= */
-
-const originalRegistrationSubmit =
-    document.getElementById(
-        "studentRegistrationForm"
-    );
-
-
-/*
-    The registration form always creates a student.
-    After registration it normally goes to Student Login.
-
-    If an admin opened the registration form, we can
-    determine whether admin mode is active.
-*/
-
-let adminAddingStudent = false;
-
-
-/*
-    Replace the admin add button behavior to enable admin mode.
-*/
 
 function openAdminAddStudent() {
 
-    adminAddingStudent = true;
+    adminAddingStudent =
+        true;
 
-    clearMessage("registrationMessage");
 
-    document
-        .getElementById("studentRegistrationForm")
-        .reset();
+    clearMessage(
+        "registrationMessage"
+    );
+
+
+    const form =
+        document.getElementById(
+            "studentRegistrationForm"
+        );
+
+
+    if (form) {
+
+        form.reset();
+
+    }
+
 
     populateCourseDropdown(
-        document.getElementById("course"),
+        document.getElementById(
+            "course"
+        ),
         ""
     );
 
-    showPage(pages.registration);
+
+    showPage(
+        pages.registration
+    );
 
 }
 
 
-/*
-    Modify the Register Now button behavior so normal
-    student registration remains normal.
-*/
+/* =========================================================
+   ADMIN STUDENTS NAVIGATION
+========================================================= */
 
-document
-    .getElementById("registerNowButton")
-    .addEventListener("click", function () {
-
-        adminAddingStudent = false;
-
-    });
-
-
-/*
-    When registration succeeds, decide where to go.
-*/
-
-const registrationForm =
+const adminStudentsNav =
     document.getElementById(
-        "studentRegistrationForm"
+        "adminStudentsNav"
     );
 
 
-/*
-    Listen to successful registration indirectly by
-    watching page navigation is not ideal, so the
-    original submit handler already handles registration.
+if (adminStudentsNav) {
 
-    The admin add flow is therefore handled by the
-    following event helper.
-*/
+    adminStudentsNav.addEventListener(
+        "click",
+        function () {
+
+            adminAddingStudent =
+                false;
 
 
-/* =========================================================
-   ADMIN STUDENT NAVIGATION
-========================================================= */
+            showPage(
+                pages.adminDashboard
+            );
 
-document
-    .getElementById("adminStudentsNav")
-    .addEventListener("click", function () {
 
-        showPage(pages.adminDashboard);
+            renderAdminDashboard();
 
-        renderAdminDashboard();
+        }
+    );
 
-    });
+}
 
 
 /* =========================================================
@@ -2296,16 +3190,42 @@ document
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
@@ -2317,8 +3237,16 @@ function escapeHTML(value) {
 function escapeAttribute(value) {
 
     return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
+
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /'/g,
+            "\\'"
+        );
 
 }
 
@@ -2327,10 +3255,16 @@ function escapeAttribute(value) {
    MESSAGE
 ========================================================= */
 
-function showMessage(elementId, message, type) {
+function showMessage(
+    elementId,
+    message,
+    type
+) {
 
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
 
     if (!element) {
@@ -2358,7 +3292,9 @@ function showMessage(elementId, message, type) {
 function clearMessage(elementId) {
 
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
 
     if (element) {
@@ -2374,51 +3310,67 @@ function clearMessage(elementId) {
    CLOSE MODALS WHEN CLICKING OUTSIDE
 ========================================================= */
 
-window.addEventListener("click", function (event) {
+window.addEventListener(
+    "click",
+    function (event) {
 
-    const detailsModal =
-        document.getElementById(
-            "studentDetailsModal"
-        );
-
-
-    const editModal =
-        document.getElementById(
-            "editStudentModal"
-        );
+        const detailsModal =
+            document.getElementById(
+                "studentDetailsModal"
+            );
 
 
-    if (event.target === detailsModal) {
+        const editModal =
+            document.getElementById(
+                "editStudentModal"
+            );
 
-        detailsModal.classList.remove("show");
+
+        if (
+            detailsModal &&
+            event.target === detailsModal
+        ) {
+
+            detailsModal.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        if (
+            editModal &&
+            event.target === editModal
+        ) {
+
+            editModal.classList.remove(
+                "show"
+            );
+
+            editingStudentId =
+                null;
+
+        }
 
     }
-
-
-    if (event.target === editModal) {
-
-        editModal.classList.remove("show");
-
-    }
-
-});
+);
 
 
 /* =========================================================
    INITIAL STATE
 ========================================================= */
 
-showPage(pages.role);
-
-
 /*
     IMPORTANT:
+
+    There is NO localStorage.
+
     There are NO predefined students.
 
-    The array starts empty:
-
-        students = []
-
-    New students are added only when the registration
-    form is successfully submitted.
+    Every time the page is refreshed,
+    the array starts empty.
 */
+
+showPage(
+    pages.role
+);

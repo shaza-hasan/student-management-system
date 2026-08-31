@@ -50,12 +50,7 @@ button {
     align-items: center;
     justify-content: center;
     padding: 30px;
-    background:
-        linear-gradient(
-            135deg,
-            #eef4ff,
-            #f8fbff
-        );
+    background: linear-gradient(135deg, #eef4ff, #f8fbff);
 }
 
 #rolePage.active-page {
@@ -245,8 +240,21 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+input:invalid:not(:placeholder-shown),
+select:invalid,
+textarea:invalid {
+    /* Browser handles required validation; no aggressive red state. */
+}
+
 textarea {
     resize: vertical;
+}
+
+.input-help {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 12px;
 }
 
 .primary-button,
@@ -306,7 +314,7 @@ textarea {
 }
 
 .register-question button {
-    margin: 5px;
+    min-width: 130px;
 }
 
 
