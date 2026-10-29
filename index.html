@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ROLE SELECTION -->
+    <section id="rolePage" class="page active-page">
+        <div class="role-container">
+            <div class="logo-circle">🎓</div>
+            <h1>Student Management System</h1>
+            <p class="subtitle">Who are you?</p>
+
+            <div class="role-buttons">
+                <button id="studentRoleBtn" class="role-card">
+                    <span class="role-icon">👨‍🎓</span>
+                    <span class="role-title">Student</span>
+                    <span class="role-description">Login or sign up as a student</span>
+                </button>
+
+                <button id="adminRoleBtn" class="role-card">
+                    <span class="role-icon">👨‍💼</span>
+                    <span class="role-title">Admin</span>
+                    <span class="role-description">Manage registered students</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- STUDENT LOGIN -->
+    <section id="studentLoginPage" class="page">
+        <div class="auth-container">
+            <button class="back-button" id="studentLoginBack">← Back</button>
+
+            <div class="auth-card">
+                <div class="auth-icon">🎓</div>
+                <h2>Student Login</h2>
+                <p class="auth-subtitle">Login using your Student ID or Username</p>
+
+                <div id="studentLoginMessage"></div>
+
+                <form id="studentLoginForm">
+                    <div class="form-group">
+                        <label for="studentLoginUsername">Student ID / Username</label>
+                        <input type="text" id="studentLoginUsername" placeholder="Enter Student ID or Username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentLoginPassword">Password</label>
+                        <input type="password" id="studentLoginPassword" placeholder="Enter password" required>
+                    </div>
+
+                    <button type="submit" class="primary-button">Login</button>
+                </form>
+
+                <div class="register-question">
+                    <p>New student?</p>
+                    <button id="registerNowButton" class="outline-button">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- STUDENT REGISTRATION -->
+    <section id="studentRegistrationPage" class="page">
+        <div class="form-page-container">
+
+            <button class="back-button" id="registrationBack">← Back to Student Login</button>
+
+            <div class="form-card">
+
+                <div class="form-header">
+                    <div class="form-icon">📝</div>
+                    <div>
+                        <h2>Student Registration</h2>
+                        <p>Enter your student information</p>
+                    </div>
+                </div>
+
+                <div id="registrationMessage"></div>
+
+                <form id="studentRegistrationForm">
+
+                    <h3 class="section-title">Account Information</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="studentId">Student ID *</label>
+                            <input type="text" id="studentId" placeholder="Enter Student ID" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">Username *</label>
+                            <input type="text" id="username" placeholder="Enter Username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password *</label>
+                            <input type="password" id="password" placeholder="Create Password" minlength="6" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password *</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password" minlength="6" required>
+                        </div>
+                    </div>
+
+
+                    <h3 class="section-title">Personal Details</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" placeholder="Enter Full Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth *</label>
+                            <input type="date" id="dateOfBirth" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" placeholder="example@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" placeholder="Enter 10-digit Phone Number"
+                                   pattern="[0-9]{10}" minlength="10" maxlength="10" inputmode="numeric" required>
+                            <small class="input-help">Enter exactly 10 digits.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="address">Address *</label>
+                        <textarea id="address" rows="3" placeholder="Enter Address" required></textarea>
+                    </div>
+
+
+                    <h3 class="section-title">Academic &amp; Course Details</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <select id="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Management">Management</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Multimedia">Multimedia</option>
+                                <option value="Hotel Management">Hotel Management</option>
+                                <option value="Psychology">Psychology</option>
+                                <option value="Social Work">Social Work</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course">Course *</label>
+                            <select id="course" required>
+                                <option value="">Select Department First</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semester">Semester *</label>
+                            <select id="semester" required>
+                                <option value="">Select Semester</option>
+                                <option value="Semester 1">Semester 1</option>
+                                <option value="Semester 2">Semester 2</option>
+                                <option value="Semester 3">Semester 3</option>
+                                <option value="Semester 4">Semester 4</option>
+                                <option value="Semester 5">Semester 5</option>
+                                <option value="Semester 6">Semester 6</option>
+                                <option value="Semester 7">Semester 7</option>
+                                <option value="Semester 8">Semester 8</option>
+                                <option value="Semester 9">Semester 9</option>
+                                <option value="Semester 10">Semester 10</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="admissionNumber">Admission Number *</label>
+                            <input type="text" id="admissionNumber" placeholder="Enter Admission Number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="admissionYear">Admission Year *</label>
+                            <input type="number" id="admissionYear" placeholder="Example: 2026" min="1900" max="2100" required>
+                        </div>
+                    </div>
+
+
+                    <h3 class="section-title">Documents</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="photo">Student Photograph</label>
+                            <input type="file" id="photo" accept="image/*">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="plusTwoCertificate">12th / Plus Two Certificate</label>
+                            <input type="file" id="plusTwoCertificate" accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="reset" class="secondary-button">Clear</button>
+                        <button type="submit" class="primary-button">Register Student</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ADMIN LOGIN -->
+    <section id="adminLoginPage" class="page">
+        <div class="auth-container">
+            <button class="back-button" id="adminLoginBack">← Back</button>
+
+            <div class="auth-card">
+                <div class="auth-icon admin-icon">🔐</div>
+                <h2>Admin Login</h2>
+                <p class="auth-subtitle">Login to manage students</p>
+
+                <div id="adminLoginMessage"></div>
+
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminUsername">Admin Username</label>
+                        <input type="text" id="adminUsername" placeholder="Enter Admin Username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminPassword">Admin Password</label>
+                        <input type="password" id="adminPassword" placeholder="Enter Admin Password" required>
+                    </div>
+
+                    <button type="submit" class="primary-button">Admin Login</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- STUDENT DASHBOARD -->
+    <section id="studentDashboardPage" class="page dashboard-page">
+        <div class="dashboard-layout">
+
+            <aside class="sidebar">
+
+                <div class="sidebar-logo">
+                    🎓
+                    <span>Student Portal</span>
+                </div>
+
+                <nav>
+                    <div class="sidebar-dropdown" id="studentDropdown">
+
+                        <button type="button" class="sidebar-link dropdown-toggle"
+                                id="studentDropdownToggle" aria-expanded="false">
+                            <span>🏠 Dashboard</span>
+                            <span class="dropdown-arrow">▾</span>
+                        </button>
+
+                        <div class="dropdown-menu" id="studentDropdownMenu">
+                            <button type="button" class="dropdown-item active" data-student-section="profile">
+                                👤 My Profile
+                            </button>
+                            <button type="button" class="dropdown-item" data-student-section="documents">
+                                📄 My Documents
+                            </button>
+                            <button type="button" class="dropdown-item" data-student-section="course">
+                                🎓 Course Details
+                            </button>
+                        </div>
+
+                    </div>
+                </nav>
+
+                <button id="studentLogoutButton" class="logout-button">🚪 Logout</button>
+
+            </aside>
+
+            <main class="dashboard-main">
+
+                <header class="dashboard-header">
+                    <div>
+                        <h1>Student Dashboard</h1>
+                        <p>Welcome to your student portal</p>
+                    </div>
+                </header>
+
+                <div id="studentDashboardContent">
+                    <!-- JavaScript inserts student details here -->
+                </div>
+
+            </main>
+
+        </div>
+    </section>
+
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="adminDashboardPage" class="page dashboard-page">
+        <div class="dashboard-layout">
+
+            <aside class="sidebar admin-sidebar">
+
+                <div class="sidebar-logo">
+                    👨‍💼
+                    <span>Admin Panel</span>
+                </div>
+
+                <nav>
+                    <button class="sidebar-link active" id="adminStudentsNav">👨‍🎓 Students</button>
+                    <button class="sidebar-link" id="adminAddStudentNav">➕ Add Student</button>
+                </nav>
+
+                <button id="adminLogoutButton" class="logout-button">🚪 Logout</button>
+
+            </aside>
+
+            <main class="dashboard-main">
+
+                <header class="dashboard-header">
+                    <div>
+                        <h1>Admin Dashboard</h1>
+                        <p>Manage registered students</p>
+                    </div>
+
+                    <button id="adminAddStudentButton" class="primary-button">+ Add Student</button>
+                </header>
+
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div>
+                            <span>Total Students</span>
+                            <strong id="totalStudents">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div>
+                            <span>Departments</span>
+                            <strong id="totalDepartments">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎓</div>
+                        <div>
+                            <span>Courses</span>
+                            <strong id="totalCourses">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="search-card">
+                    <div class="form-group">
+                        <label for="studentSearch">Search Students</label>
+                        <input type="text" id="studentSearch"
+                               placeholder="Search by Student ID, Name, Email, Course or Department...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departmentFilter">Department</label>
+                        <select id="departmentFilter">
+                            <option value="">All Departments</option>
+                            <option value="Management">Management</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Multimedia">Multimedia</option>
+                            <option value="Hotel Management">Hotel Management</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="Social Work">Social Work</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="courseFilter">Course</label>
+                        <select id="courseFilter">
+                            <option value="">All Courses</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="table-card">
+                    <div class="table-header">
+                        <div>
+                            <h2>Registered Students</h2>
+                            <p>View, edit or delete student records</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Department</th>
+                                    <th>Course</th>
+                                    <th>Semester</th>
+                                    <th>Admission Year</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="studentTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+    </section>
+
+
+    <!-- ADMIN STUDENT DETAILS MODAL -->
+    <div id="studentDetailsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeStudentDetails">×</button>
+            <div id="studentDetailsContent"></div>
+        </div>
+    </div>
+
+
+    <!-- ADMIN EDIT STUDENT MODAL -->
+    <div id="editStudentModal" class="modal">
+        <div class="modal-content large-modal">
+
+            <button class="modal-close" id="closeEditStudent">×</button>
+
+            <h2>Edit Student</h2>
+
+            <div id="editStudentMessage"></div>
+
+            <form id="editStudentForm">
+
+                <input type="hidden" id="editOriginalStudentId">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="editStudentId">Student ID</label>
+                        <input type="text" id="editStudentId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editUsername">Username</label>
+                        <input type="text" id="editUsername" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editFullName">Full Name</label>
+                        <input type="text" id="editFullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDateOfBirth">Date of Birth</label>
+                        <input type="date" id="editDateOfBirth" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editGender">Gender</label>
+                        <select id="editGender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editPhone">Phone</label>
+                        <input type="tel" id="editPhone" placeholder="Enter 10-digit Phone Number"
+                               pattern="[0-9]{10}" minlength="10" maxlength="10" inputmode="numeric" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDepartment">Department</label>
+                        <select id="editDepartment" required>
+                            <option value="">Select Department</option>
+                            <option value="Management">Management</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Multimedia">Multimedia</option>
+                            <option value="Hotel Management">Hotel Management</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="Social Work">Social Work</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editCourse">Course</label>
+                        <select id="editCourse" required>
+                            <option value="">Select Course</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editSemester">Semester</label>
+                        <select id="editSemester" required>
+                            <option value="">Select Semester</option>
+                            <option value="Semester 1">Semester 1</option>
+                            <option value="Semester 2">Semester 2</option>
+                            <option value="Semester 3">Semester 3</option>
+                            <option value="Semester 4">Semester 4</option>
+                            <option value="Semester 5">Semester 5</option>
+                            <option value="Semester 6">Semester 6</option>
+                            <option value="Semester 7">Semester 7</option>
+                            <option value="Semester 8">Semester 8</option>
+                            <option value="Semester 9">Semester 9</option>
+                            <option value="Semester 10">Semester 10</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editAdmissionNumber">Admission Number</label>
+                        <input type="text" id="editAdmissionNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editAdmissionYear">Admission Year</label>
+                        <input type="number" id="editAdmissionYear" min="1900" max="2100" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="editAddress">Address</label>
+                    <textarea id="editAddress" rows="3" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancelEditButton" class="secondary-button">Cancel</button>
+                    <button type="submit" class="primary-button">Save Changes</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
