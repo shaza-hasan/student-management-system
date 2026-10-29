@@ -19,6 +19,10 @@ body {
     min-height: 100vh;
 }
 
+img {
+    max-width: 100%;
+}
+
 button,
 input,
 select,
@@ -240,12 +244,6 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-input:invalid:not(:placeholder-shown),
-select:invalid,
-textarea:invalid {
-    /* Browser handles required validation; no aggressive red state. */
-}
-
 textarea {
     resize: vertical;
 }
@@ -376,6 +374,7 @@ textarea {
     align-items: center;
     justify-content: center;
     font-size: 28px;
+    flex-shrink: 0;
 }
 
 .form-header h2 {
@@ -437,6 +436,8 @@ textarea {
     left: 0;
     top: 0;
     bottom: 0;
+    overflow-y: auto;
+    z-index: 10;
 }
 
 .sidebar-logo {
@@ -500,6 +501,7 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
 }
 
 .dashboard-header h1 {
@@ -513,7 +515,65 @@ textarea {
 
 
 /* =========================================================
-   STUDENT DASHBOARD
+   STUDENT DASHBOARD DROPDOWN
+========================================================= */
+
+.sidebar-dropdown {
+    width: 100%;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+.dropdown-arrow {
+    transition: transform 0.25s ease;
+}
+
+.sidebar-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 10px;
+    transition: max-height 0.3s ease, margin-top 0.3s ease;
+}
+
+.sidebar-dropdown.open .dropdown-menu {
+    max-height: 220px;
+    margin-top: 8px;
+}
+
+.dropdown-item {
+    width: 100%;
+    text-align: left;
+    padding: 11px 14px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #dbeafe;
+    font-size: 14px;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+}
+
+
+/* =========================================================
+   STUDENT DASHBOARD CONTENT
 ========================================================= */
 
 .profile-header {
@@ -532,6 +592,7 @@ textarea {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #dbeafe;
+    flex-shrink: 0;
 }
 
 .profile-placeholder {
@@ -543,10 +604,12 @@ textarea {
     align-items: center;
     justify-content: center;
     font-size: 50px;
+    flex-shrink: 0;
 }
 
 .profile-header h2 {
     margin-bottom: 8px;
+    word-break: break-word;
 }
 
 .profile-id {
@@ -652,6 +715,7 @@ textarea {
     align-items: center;
     justify-content: center;
     font-size: 24px;
+    flex-shrink: 0;
 }
 
 .stat-card span {
@@ -867,6 +931,10 @@ td {
         grid-template-columns: 1fr;
     }
 
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
     .sidebar {
         width: 210px;
     }
@@ -889,7 +957,7 @@ td {
     }
 
     .auth-container {
-        padding: 25px 15px;
+        padding: 70px 15px 25px;
     }
 
     .auth-card {
@@ -922,6 +990,7 @@ td {
         width: 100%;
         min-height: auto;
         padding: 15px;
+        overflow-y: visible;
     }
 
     .sidebar-logo {
@@ -929,12 +998,21 @@ td {
     }
 
     .sidebar nav {
+        display: block;
+    }
+
+    .admin-sidebar nav {
+        display: flex;
         flex-direction: row;
         flex-wrap: wrap;
     }
 
-    .sidebar-link {
+    .admin-sidebar .sidebar-link {
         width: auto;
+    }
+
+    .dropdown-menu {
+        padding-left: 0;
     }
 
     .logout-button {
@@ -950,16 +1028,32 @@ td {
     .dashboard-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 21px;
     }
 
     .profile-header {
         flex-direction: column;
         text-align: center;
+        padding: 22px 15px;
     }
 
-    .detail-grid {
-        grid-template-columns: 1fr;
+    .profile-photo,
+    .profile-placeholder {
+        width: 95px;
+        height: 95px;
+        font-size: 40px;
+    }
+
+    .detail-card {
+        padding: 18px 15px;
+    }
+
+    .document-card {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .modal-content {
